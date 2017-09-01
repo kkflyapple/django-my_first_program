@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>我的秘密花园</title>
+	<style>
+	* {
+	margin:0;
+	padding:0;
+	font-family:Arial,Helvetica,sans-serif;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	word-break: break-all;
+	}
+ul,li {
+	list-style-type:none;
+}
+h3{
+	text-align:center;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+.main-view {
+	width:100%;
+	border:solid 1px #e1e1e1;
+	width:80%;
+	margin-left:10%;
+	border:solid 1px rgb(205,206,207);
+}
+.msg-list .title,
+.msg-create .title{
+	background-color: rgb(250,80,131);
+	height:50px;
+	line-height:50px;
+	color:white;
+	padding-left:2%;
+	color:black;
+	background-color:rgb(229,230,231);
+}
+.msg-list-view,
+.msg-create-view{
+	width:96%;
+	min-height:200px;
+	/*border:solid 1px #e1e1e1;*/
+	border-radius:5px;
+	margin:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	font-size:15px;
+}
+.msg-list-view li{
+	border-bottom: dashed 1px #e1e1e1;
+	margin: 10px 0;
+	padding: 10px 0;
+}
+.msg-list-view li .header{
+	background-color: antiquewhite;
+	height:35px;
+	line-height:35px;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 10px;
+	color:gray;
+	margin-bottom:10px;
+}
+.msg-create-view textarea{
+	height:200px;
+	padding:10px;
+	width: calc(100% - 20px);
+}
+	</style>
+</head>
+<body> 
+	<h3>我的秘密花园</h3>
+	<div class="main-view">
+		<div class="msg-list">
+			<div class="title" style="">
+			留言
+			</div>
+			<div class="msg-list-view">
+				{% if msg_list %}
+					{% for msg in msg_list %}
+						<li>
+							<div class="header"><span>{{msg.index}}楼</span><span>{{msg.datetime}}</span></div>
+							<p>{{msg.content}}</p>
+						</li>
+					{% endfor %}
+				{% else %}
+					<p>暂无评论</p>
+				{% endif %}
+			</div>
+		</div>
+		<div class="msg-create">
+			<div class="title" style="">添加留言</div>
+			<div class="msg-create-view">
+				<form method="post"  action = "/messageboard/msg/create/">
+					{% csrf_token %}
+					<textarea name="content"></textarea>
+					<div class="btn" style="text-align:center; margin-top:20px;">
+						<button style="width:100px; height:40px;">提交</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body> 
